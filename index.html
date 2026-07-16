@@ -1,0 +1,1860 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI 實務應用進階課程 · 產業發展署教育訓練</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700;900&family=Noto+Sans+TC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/theme/white.css" id="theme">
+
+<style>
+/* ================= Design Tokens ================= */
+:root{
+  --bg:#EEF1F4;
+  --bg-card:#F8FAFC;
+  --bg-deep:#0B2239;
+  --ink:#12283D;
+  --ink-soft:#40566B;
+  --ink-muted:#8CA0B3;
+  --accent:#2D5F8B;
+  --accent-soft:#DCE7F1;
+  --warn:#B4532E;
+  --warn-soft:#F4E3DA;
+  --divider:#C9D4DE;
+  --rule:#B7C4D0;
+
+  --fs-display:112px;
+  --fs-h1:60px;
+  --fs-h2:42px;
+  --fs-h3:33px;
+  --fs-body:29px;
+  --fs-small:24px;
+  --fs-label:19px;
+  --fs-mono:21px;
+
+  --serif:'Noto Serif TC', Georgia, serif;
+  --sans:'Noto Sans TC', -apple-system, sans-serif;
+  --mono:'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* ================= Reveal overrides ================= */
+html, body { background-color: var(--bg); }
+.reveal-viewport, .reveal{
+  background-color: var(--bg) !important;
+  background-image:
+    radial-gradient(circle at 14% 20%, rgba(11,34,57,0.020) 0 1px, transparent 1px),
+    radial-gradient(circle at 74% 46%, rgba(45,95,139,0.018) 0 1px, transparent 1px),
+    repeating-linear-gradient(0deg, rgba(11,34,57,0.012) 0 1px, transparent 1px 6px) !important;
+  background-size: 7px 7px, 11px 11px, 100% 6px !important;
+}
+.reveal { font-family: var(--sans); color: var(--ink); font-weight: 400; }
+.reveal .slides { text-align: left; }
+.reveal .slides section { padding: 0; box-sizing: border-box; height: 1080px; }
+.reveal .progress { color: var(--accent); }
+.reveal .controls { color: var(--ink-muted); }
+.reveal h1,.reveal h2,.reveal h3,.reveal h4{
+  font-family: var(--serif); font-weight: 600; color: var(--ink);
+  text-transform: none; letter-spacing: -0.01em; line-height: 1.22; margin: 0;
+}
+.reveal p { margin: 0; line-height: 1.62; }
+.reveal a { color: var(--accent); text-decoration: none; }
+::selection { background: var(--accent-soft); }
+.reveal ul,.reveal ol { list-style: none; padding: 0; margin: 0; }
+.reveal img { max-width: 100%; margin: 0; }
+.accent { color: var(--accent); }
+.warn-text { color: var(--warn); }
+
+/* ================= Frame ================= */
+.frame{
+  position: relative; width: 100%; height: 100%;
+  padding: 96px 110px 72px; box-sizing: border-box;
+  display: flex; flex-direction: column;
+}
+.frame::before{
+  content:""; position:absolute; left:110px; right:110px; top:62px;
+  height:1px; background: var(--rule); pointer-events:none;
+}
+.meta-top{
+  position:absolute; top:34px; left:110px; right:110px;
+  display:flex; justify-content:space-between; align-items:center;
+  font-family:var(--mono); font-size:13px; color:var(--ink-muted);
+  letter-spacing:0.08em; text-transform:uppercase;
+}
+.meta-top .brand{ display:flex; align-items:center; gap:14px; }
+.meta-top .brand .dot{
+  width:7px; height:7px; border-radius:50%; background:var(--accent); display:inline-block;
+}
+.meta-top .brand .sep{ color:var(--divider); }
+
+/* ================= Title block ================= */
+.title-block{ display:flex; flex-direction:column; gap:12px; margin-bottom:44px; }
+.title-block .deco{
+  font-family:var(--mono); font-size:19px; font-weight:500;
+  color:var(--accent); letter-spacing:0.06em;
+  display:flex; align-items:center; gap:16px;
+}
+.title-block .deco::before{
+  content:""; display:inline-block; width:34px; height:1px; background:var(--accent);
+}
+.title-block h1{ font-size:var(--fs-h1); }
+.title-block .sub{
+  font-size:var(--fs-small); color:var(--ink-soft); line-height:1.5;
+}
+
+/* ================= Chapter divider ================= */
+.chapter{ flex:1; display:flex; flex-direction:column; justify-content:center; gap:30px; }
+.chapter .ch-no{
+  font-family:var(--mono); font-size:22px; color:var(--accent);
+  letter-spacing:0.22em; text-transform:uppercase;
+  display:flex; align-items:center; gap:20px;
+}
+.chapter .ch-no::after{ content:""; flex:0 0 72px; height:1px; background:var(--accent); }
+.chapter .ch-title{ font-family:var(--serif); font-weight:700; font-size:var(--fs-display); line-height:1.12; letter-spacing:-0.015em; }
+.chapter .ch-sub{ font-size:var(--fs-h3); color:var(--ink-soft); font-weight:300; line-height:1.5; }
+.ch-idx{
+  position:absolute; right:110px; bottom:120px;
+  font-family:var(--serif); font-size:300px; font-weight:900;
+  color:var(--accent); opacity:0.07; line-height:1;
+}
+
+/* ================= Layout helpers ================= */
+.fill{ flex:1; display:flex; flex-direction:column; min-height:0; }
+.cols{ display:flex; gap:48px; flex:1; min-height:0; }
+.cols > .col{ flex:1; display:flex; flex-direction:column; gap:28px; min-width:0; }
+.gap-lg{ gap:40px; }
+
+/* ================= Panels & cards ================= */
+.panel{
+  background:var(--bg-card); border:1px solid var(--divider);
+  border-radius:16px; padding:36px 40px;
+  display:flex; flex-direction:column; gap:14px;
+}
+.panel .kicker{
+  font-family:var(--mono); font-size:var(--fs-label); font-weight:500;
+  color:var(--accent); letter-spacing:0.1em; text-transform:uppercase;
+}
+.panel h3{ font-size:var(--fs-h3); }
+.panel p{ font-size:var(--fs-body); color:var(--ink-soft); }
+.panel.warn{ background:#FBF5F1; border-color:#E3C8B8; }
+.panel.warn .kicker{ color:var(--warn); }
+.panel.deep{ background:var(--bg-deep); border-color:var(--bg-deep); }
+.panel.deep h3, .panel.deep p{ color:#E8EFF6; }
+.panel.deep .kicker{ color:#9FC1DE; }
+.panel.deep p{ color:#B9CCDC; }
+
+.cards-2{ display:grid; grid-template-columns:1fr 1fr; gap:30px; flex:1; min-height:0; align-content:stretch; }
+.cards-3{ display:grid; grid-template-columns:repeat(3,1fr); gap:30px; flex:1; min-height:0; }
+.cards-2 .panel, .cards-3 .panel{ padding:32px 36px; gap:10px; }
+
+/* ================= Numbered list ================= */
+.num-list{ display:flex; flex-direction:column; gap:26px; }
+.num-list .item{ display:flex; gap:26px; align-items:flex-start; }
+.num-list .no{
+  font-family:var(--serif); font-size:44px; font-weight:700; color:var(--accent);
+  line-height:1.1; min-width:56px;
+}
+.num-list .item h3{ font-size:var(--fs-h3); margin-bottom:6px; }
+.num-list .item p{ font-size:var(--fs-body); color:var(--ink-soft); }
+
+/* ================= Step flow ================= */
+.flow{ display:flex; gap:0; align-items:stretch; }
+.flow .step{
+  flex:1; background:var(--bg-card); border:1px solid var(--divider);
+  border-radius:16px; padding:30px 32px; display:flex; flex-direction:column; gap:8px;
+}
+.flow .arrow{
+  display:flex; align-items:center; padding:0 16px;
+  font-family:var(--serif); font-size:40px; color:var(--accent);
+}
+.flow .step .kicker{
+  font-family:var(--mono); font-size:17px; color:var(--accent); letter-spacing:0.1em;
+}
+.flow .step h3{ font-size:30px; }
+.flow .step p{ font-size:23px; color:var(--ink-soft); line-height:1.5; }
+
+/* ================= Statement strip ================= */
+.strip{
+  background:var(--bg-deep); border-radius:16px;
+  padding:30px 44px; margin-top:34px;
+  display:flex; align-items:baseline; gap:24px;
+}
+.strip .tag{
+  font-family:var(--mono); font-size:18px; color:#9FC1DE;
+  letter-spacing:0.14em; text-transform:uppercase; white-space:nowrap;
+}
+.strip .txt{ font-family:var(--serif); font-size:32px; font-weight:600; color:#F0F5FA; line-height:1.5; }
+.strip .txt em{ font-style:normal; color:#A8CBE8; }
+
+/* ================= Note ================= */
+.note{
+  border-left:4px solid var(--warn); padding:6px 0 6px 26px; margin-top:28px;
+  font-size:var(--fs-small); color:var(--ink-soft); line-height:1.6;
+}
+.note b{ color:var(--warn); font-weight:600; }
+
+/* ================= Big statement ================= */
+.statement{
+  font-family:var(--serif); font-size:var(--fs-h2); font-weight:600;
+  line-height:1.55; color:var(--ink); max-width:1400px;
+}
+.statement .accent{ color:var(--accent); }
+
+/* ================= QR card ================= */
+.qr-card{
+  background:#fff; border:1px solid var(--divider); border-radius:18px;
+  padding:34px; display:flex; flex-direction:column; align-items:center; gap:16px;
+  text-align:center;
+}
+.qr-card img{ width:240px; height:240px; object-fit:contain; }
+.qr-card .qr-name{ font-family:var(--serif); font-size:31px; font-weight:600; }
+.qr-card .qr-url{ font-family:var(--mono); font-size:20px; color:var(--accent); }
+.qr-card .qr-sub{ font-size:20px; color:var(--ink-muted); }
+
+/* ================= Screenshots ================= */
+.shot-row{ display:flex; gap:36px; flex:1; min-height:0; align-items:stretch; justify-content:center; }
+.shot-col{ display:flex; flex-direction:column; gap:14px; align-items:center; flex:1; min-width:0; min-height:0; }
+.shot-col figure{ margin:0; flex:1; min-height:0; display:flex; align-items:center; justify-content:center; width:100%; }
+.shot-col img{
+  max-height:100%; max-width:100%; object-fit:contain;
+  border-radius:14px; border:1px solid var(--divider);
+  box-shadow:0 20px 50px rgba(11,34,57,0.14);
+}
+.shot-cap{
+  display:flex; align-items:center; gap:12px;
+  font-size:23px; color:var(--ink-soft);
+}
+.shot-cap .step-no{
+  font-family:var(--mono); font-size:18px; color:#fff; background:var(--accent);
+  border-radius:999px; min-width:34px; height:34px; display:inline-flex;
+  align-items:center; justify-content:center;
+}
+.shot-full{ flex:1; min-height:0; display:flex; align-items:center; justify-content:center; }
+.shot-full img{
+  max-height:100%; max-width:100%; object-fit:contain;
+  border-radius:16px; border:1px solid var(--divider);
+  box-shadow:0 24px 60px rgba(11,34,57,0.16);
+}
+
+/* ================= Prompt box ================= */
+.prompt-box{
+  background:var(--bg-deep); border-radius:16px; padding:36px 42px;
+  font-family:var(--mono); font-size:26px; line-height:1.8; color:#DCE9F4;
+}
+.prompt-box .cmt{ color:#7E9BB5; font-size:20px; display:block; margin-bottom:10px; }
+
+/* ================= Cover ================= */
+.cover{ flex:1; display:flex; gap:80px; align-items:center; min-height:0; }
+.cover-left{ flex:1.15; display:flex; flex-direction:column; gap:34px; }
+.cover .agency{
+  font-family:var(--mono); font-size:21px; color:var(--accent);
+  letter-spacing:0.22em; display:flex; align-items:center; gap:18px;
+}
+.cover .agency::before{ content:""; width:44px; height:1px; background:var(--accent); }
+.cover h1{ font-size:120px; font-weight:900; line-height:1.16; letter-spacing:-0.01em; }
+.cover h1 .accent{ color:var(--accent); }
+.cover .cover-sub{ font-size:31px; color:var(--ink-soft); font-weight:300; line-height:1.6; }
+.cover .cover-date{ font-family:var(--mono); font-size:20px; color:var(--ink-muted); letter-spacing:0.1em; }
+.cover-right{ flex:0.85; }
+.term{
+  background:var(--bg-deep); border-radius:18px; overflow:hidden;
+  box-shadow:0 30px 70px rgba(11,34,57,0.25);
+}
+.term-bar{
+  display:flex; align-items:center; gap:9px; padding:16px 20px;
+  background:rgba(255,255,255,0.06); border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.term-bar span{ width:13px; height:13px; border-radius:50%; background:#54718C; opacity:.6; }
+.term-bar .t-title{
+  flex:1; text-align:center; font-family:var(--mono); font-size:15px;
+  color:#8FA9C0; letter-spacing:0.08em; background:none; width:auto; height:auto; border-radius:0; opacity:1;
+}
+.term-body{ padding:30px 32px 38px; font-family:var(--mono); font-size:21px; line-height:2.1; color:#C9DBEA; min-height:330px; }
+.term-body .ln{ display:block; white-space:nowrap; }
+.term-body .prompt{ color:#6FA3D0; }
+.term-body .ok{ color:#7FBF9E; }
+.term-body .caret{
+  display:inline-block; width:11px; height:24px; background:#9FC1DE;
+  vertical-align:-4px; margin-left:4px; animation:blink 1s steps(1) infinite;
+}
+@keyframes blink{ 50%{ opacity:0; } }
+
+/* ================= Agenda ================= */
+.agenda{ display:grid; grid-template-columns:1fr 1fr; gap:22px 44px; flex:1; align-content:center; }
+.agenda .ag-item{
+  display:flex; gap:24px; align-items:flex-start;
+  background:var(--bg-card); border:1px solid var(--divider);
+  border-radius:14px; padding:24px 30px;
+}
+.agenda .ag-no{ font-family:var(--serif); font-size:40px; font-weight:700; color:var(--accent); line-height:1.15; min-width:46px; }
+.agenda .ag-item h3{ font-size:29px; margin-bottom:4px; }
+.agenda .ag-item p{ font-size:21px; color:var(--ink-muted); line-height:1.45; }
+
+/* ================= Compare (vs) ================= */
+.compare{ display:flex; gap:0; flex:1; min-height:0; align-items:stretch; }
+.compare .side{ flex:1; }
+.compare .vs{
+  display:flex; align-items:center; padding:0 26px;
+  font-family:var(--serif); font-style:italic; font-size:30px; color:var(--ink-muted);
+}
+.check-list{ display:flex; flex-direction:column; gap:12px; }
+.check-list li{ font-size:var(--fs-body); color:var(--ink-soft); display:flex; gap:14px; align-items:baseline; }
+.check-list li::before{ content:"—"; color:var(--accent); font-weight:600; flex:0 0 auto; }
+.panel.warn .check-list li::before{ color:var(--warn); }
+
+/* ================= Thanks ================= */
+.thanks{ flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:30px; text-align:center; }
+.thanks .deco{ font-family:var(--mono); font-size:21px; color:var(--accent); letter-spacing:0.3em; }
+.thanks .big{ font-family:var(--serif); font-size:150px; font-weight:900; letter-spacing:0.04em; }
+.thanks .sub{ font-size:34px; color:var(--ink-soft); font-weight:300; line-height:1.7; }
+.thanks .cta{ font-size:26px; color:var(--ink-muted); }
+</style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- ============ 01 Cover ============ -->
+    <section data-screen-label="01 Cover">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>115.07.17</span>
+        </div>
+        <div class="cover">
+          <div class="cover-left">
+            <div class="agency">INDUSTRIAL DEVELOPMENT ADMINISTRATION</div>
+            <h1>AI 實務應用<br/><span class="accent">進階課程</span></h1>
+            <p class="cover-sub">一個觀念 × 六套工具<br/>從搜尋、輸入、會議紀錄到對 AI 許願</p>
+            <p class="cover-date">DATE — 115.07.17</p>
+          </div>
+          <div class="cover-right">
+            <div class="term" id="cover-term">
+              <div class="term-bar"><span></span><span></span><span></span><span class="t-title">ai-course — zsh</span></div>
+              <div class="term-body">
+                <span class="ln"><span class="prompt">$</span> <span class="typed" data-typed="開始上課 --觀念優先" data-delay="300" data-speed="55"></span></span>
+                <span class="ln"><span class="typed" data-typed="✓ 載入：AI 搜尋 / Typeless / 會議紀錄" data-delay="1900" data-speed="30"></span></span>
+                <span class="ln"><span class="typed" data-typed="✓ 載入：NotebookLM / 公文檢查 / 許願" data-delay="3300" data-speed="30"></span></span>
+                <span class="ln"><span class="ok typed" data-typed="ready — 工具會換，觀念不變。" data-delay="4700" data-speed="45"></span><span class="caret"></span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">開場。今天一個觀念、六套工具，重點是觀念——工具會一直換。</aside>
+    </section>
+
+    <!-- ============ 02 Agenda ============ -->
+    <section data-screen-label="02 Agenda">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>2 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">AGENDA</div>
+          <h1>課程流程總覽</h1>
+        </div>
+        <div class="agenda">
+          <div class="ag-item"><div class="ag-no">1</div><div><h3>使用 AI 的正確觀念</h3><p>幻覺與查證｜四個底層邏輯｜AI 常用語氣</p></div></div>
+          <div class="ag-item"><div class="ag-no">2</div><div><h3>AI 快速搜尋</h3><p>Felo／Perplexity ＋ 簡報功能</p></div></div>
+          <div class="ag-item"><div class="ag-no">3</div><div><h3>語音輸入法 Typeless</h3><p>手機版＋電腦版</p></div></div>
+          <div class="ag-item"><div class="ag-no">4</div><div><h3>會議紀錄全流程</h3><p>會議記錄機器人 × Canvas 匯出 Word</p></div></div>
+          <div class="ag-item"><div class="ag-no">5</div><div><h3>NotebookLM</h3><p>大型資料與簡報素材</p></div></div>
+          <div class="ag-item"><div class="ag-no">6</div><div><h3>公文檢查機器人</h3><p>送出前 30 秒掃一遍</p></div></div>
+          <div class="ag-item"><div class="ag-no">7</div><div><h3>對 AI 許願</h3><p>修鞋匠小精靈＋課程結尾</p></div></div>
+          <div class="ag-item"><div class="ag-no">＋</div><div><h3>課後 Q&amp;A</h3><p>包括「我想許願」都歡迎提出</p></div></div>
+        </div>
+      </div>
+      <aside class="notes">七段課程加課後 QA，重頭戲是第四段會議紀錄全流程。</aside>
+    </section>
+
+    <!-- ============ 03 Chapter 1 ============ -->
+    <section data-screen-label="03 Chapter · 觀念">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>3 / 50</span>
+        </div>
+        <div class="chapter">
+          <div class="ch-no">SECTION 01</div>
+          <div class="ch-title">使用 AI 的<br/>正確觀念</div>
+          <div class="ch-sub">工具會一直換，觀念對了，換什麼工具都用得好</div>
+        </div>
+        <div class="ch-idx">1</div>
+      </div>
+      <aside class="notes">第一段：觀念。這段是整堂課的地基。</aside>
+    </section>
+
+    <!-- ============ 04 觀念一 幻覺 ============ -->
+    <section data-screen-label="04 觀念一 · AI 幻覺">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>4 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">觀念一</div>
+          <h1>AI 的內容不能盡信，<span class="accent">查證是你的責任</span></h1>
+        </div>
+        <div class="cards-3">
+          <div class="panel">
+            <span class="kicker">What</span>
+            <h3>什麼是「AI 幻覺」？</h3>
+            <p>AI 回答得頭頭是道：格式漂亮、語氣自信，連法條、數據、出處都附給你。但實際去查——沒有那一項法條、數據查無來源、報告根本不存在。</p>
+          </div>
+          <div class="panel">
+            <span class="kicker">Why</span>
+            <h3>為什麼會這樣？</h3>
+            <p>AI 是「預測下一個字」的接龍程式。它的工作是把話講得通順、講得像真的，而不是保證講的是真的。</p>
+          </div>
+          <div class="panel warn">
+            <span class="kicker">Danger</span>
+            <h3>最危險的地方</h3>
+            <p>它錯的時候不會結結巴巴，是用跟講對時一模一樣的自信語氣，把錯的講給你聽。</p>
+          </div>
+        </div>
+        <div class="strip">
+          <span class="tag">Hallucination</span>
+          <span class="txt">講得越像真的，越要記得：<em>像真的 ≠ 是真的</em>。</span>
+        </div>
+      </div>
+      <aside class="notes">AI 幻覺：格式漂亮、語氣自信，但內容可能是編的。原理是文字接龍。最危險的是錯的時候語氣跟對的時候一樣。</aside>
+    </section>
+
+    <!-- ============ 05 觀念一補充 討好 ============ -->
+    <section data-screen-label="05 觀念一補充 · AI 會討好你">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>5 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">觀念一 · 補充</div>
+          <h1>AI 會討好你，<span class="accent">它的稱讚不能當真</span></h1>
+        </div>
+        <div class="cols">
+          <div class="col">
+            <div class="panel" style="flex:1">
+              <span class="kicker">有沒有發現？</span>
+              <p>不管你問什麼，它都先說「這是一個非常好的問題」；你提個構想，它馬上說「這個方向非常有價值」。</p>
+              <p>這不是它真的覺得好——它被訓練成傾向<b>順著使用者講話</b>。所以拿方案問它「好不好」，它多半說好。</p>
+              <p style="color:var(--ink); font-weight:500;">它奉承你的話聽聽就好，它挑出來的毛病才有價值。</p>
+            </div>
+          </div>
+          <div class="col">
+            <p style="font-family:var(--serif); font-size:var(--fs-h3); font-weight:600;">要有用的意見，明確叫它唱反調</p>
+            <div class="num-list">
+              <div class="item"><div class="no">1</div><div><h3>「請挑出這個方案的三個問題」</h3><p>強迫它給批評，而不是給讚美</p></div></div>
+              <div class="item"><div class="no">2</div><div><h3>「假設你是反對這個政策的立委，你會怎麼質詢？」</h3><p>換一個立場，盲點就現形</p></div></div>
+              <div class="item"><div class="no">3</div><div><h3>「哪些情況下這個做法會失敗？」</h3><p>先想失敗，再談成功</p></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">AI 被訓練成順著使用者。要有用的意見就叫它唱反調：挑三個問題、立場互換、先想失敗。</aside>
+    </section>
+
+    <!-- ============ 06 觀念一原則 草稿 ============ -->
+    <section data-screen-label="06 觀念一原則 · 草稿不是答案">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>6 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">觀念一 · 原則</div>
+          <h1>AI 給的是「草稿」，<span class="accent">不是「答案」</span></h1>
+        </div>
+        <div class="fill" style="justify-content:center; gap:44px;">
+          <p class="statement">凡是<span class="accent">要對外、要簽核、要給長官</span>的東西——<br/>數字、日期、法規、人名、案例，一律回到原始來源查證。</p>
+          <div class="cols" style="flex:0 0 auto;">
+            <div class="col">
+              <div class="panel">
+                <span class="kicker">查證是誰的責任？</span>
+                <p>不是 AI 的責任，是<b>我們使用者</b>的責任。</p>
+              </div>
+            </div>
+            <div class="col">
+              <div class="panel">
+                <span class="kicker">為什麼？</span>
+                <p>文件送出去，掛的是<b>你的名字</b>，不是 AI 的名字。</p>
+              </div>
+            </div>
+          </div>
+          <div class="strip" style="margin-top:0;">
+            <span class="tag">Principle</span>
+            <span class="txt">「<em>AI 先做，你來改</em>」，不是 AI 做完，你按送出。</span>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">核心原則：AI 先做、你來改。文件掛的是你的名字。</aside>
+    </section>
+
+    <!-- ============ 07 觀念二 適用場景 ============ -->
+    <section data-screen-label="07 觀念二 · 什麼情況適合">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>7 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">觀念二</div>
+          <h1>什麼情況適合用 AI、<span class="accent">什麼情況要小心</span></h1>
+        </div>
+        <div class="compare">
+          <div class="side panel">
+            <span class="kicker">放心用 — 你自己能驗證的工作</span>
+            <ul class="check-list" style="margin-top:8px;">
+              <li>潤飾公文文字</li>
+              <li>長篇報告摘要成重點</li>
+              <li>擬信件、簽呈初稿</li>
+              <li>腦力激盪活動點子</li>
+              <li>資料換格式整理</li>
+            </ul>
+            <p style="margin-top:auto; font-size:var(--fs-small); color:var(--ink-muted);">一眼看得出好壞，錯了也改得掉，用它省時間。</p>
+          </div>
+          <div class="vs">vs</div>
+          <div class="side panel warn">
+            <span class="kicker">要小心 — 你無法判斷對錯的工作</span>
+            <ul class="check-list" style="margin-top:8px;">
+              <li>不熟的法規解釋</li>
+              <li>精確的統計數據</li>
+              <li>專業領域的事實查詢</li>
+            </ul>
+            <p style="margin-top:auto; font-size:var(--fs-small); color:var(--ink-muted);">答案你沒能力把關，一定要回到官方來源、原始文件核對。</p>
+          </div>
+        </div>
+        <div class="strip">
+          <span class="tag">簡單判斷法</span>
+          <span class="txt">如果 AI 答錯了你看不出來，<em>這件事就不能只靠 AI</em>。</span>
+        </div>
+      </div>
+      <aside class="notes">判斷法一句話：AI 答錯了你看不出來的事，不能只靠 AI。</aside>
+    </section>
+
+    <!-- ============ 08 觀念三 交辦 ============ -->
+    <section data-screen-label="08 觀念三 · 不直接回長官">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>8 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">觀念三</div>
+          <h1>長官交辦的事，<span class="accent">不要直接用 AI 回給長官</span></h1>
+        </div>
+        <div class="cols">
+          <div class="col">
+            <div class="panel" style="flex:1">
+              <span class="kicker">第一：這樣做，你就沒有價值了</span>
+              <p>長官要的不是「一份報告」，是「<b>專業判斷</b>」。</p>
+              <p>署裡的立場、過去案例、長官在意的點、政策眉角——這些 AI 通通不知道。</p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="panel warn" style="flex:1">
+              <span class="kicker">第二：AI 有幻覺、有偏誤</span>
+              <p>它對台灣法規、機關實務常一知半解卻講得很篤定。</p>
+              <p>沒消化就轉給長官＝<b>用你的名義背書</b>。錯了，責任是你的。</p>
+            </div>
+          </div>
+        </div>
+        <div class="strip">
+          <span class="tag">定位</span>
+          <span class="txt">AI 是幫你整理資料的工具，不是幫你做決策的長官——<em>AI 提供選項，人做選擇</em>。</span>
+        </div>
+      </div>
+      <aside class="notes">方向性、策略性判斷需要價值取捨與在地脈絡，需要有人負政治與行政責任，現在與未來都不該外包給 AI。</aside>
+    </section>
+
+    <!-- ============ 09 觀念四 六大NG ============ -->
+    <section data-screen-label="09 觀念四 · 六大 NG">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>9 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">觀念四</div>
+          <h1>上班使用 AI 的<span class="accent">六大 NG 行為</span></h1>
+        </div>
+        <div class="cards-3" style="grid-template-rows:1fr 1fr;">
+          <div class="panel warn"><span class="kicker">NG 1 · 最嚴重</span><h3>把機敏資料餵給 AI</h3><p>個資、公文、未公開草案貼給外部 AI。先去識別化，或用機關核可的工具。</p></div>
+          <div class="panel warn"><span class="kicker">NG 2</span><h3>產出不查證直接使用</h3><p>法條、數據、出處沒查證就放進公文，出事的是你。</p></div>
+          <div class="panel warn"><span class="kicker">NG 3</span><h3>交辦事項原封不動回覆</h3><p>你會失去價值，也等於幫錯誤內容背書。</p></div>
+          <div class="panel warn"><span class="kicker">NG 4</span><h3>讓 AI 做超出角色的事</h3><p>考績、篩選人員等涉及個人權益的判斷，AI 的偏誤會變成對人的不公平。</p></div>
+          <div class="panel warn"><span class="kicker">NG 5</span><h3>假裝是自己的原創成果</h3><p>AI 輔助沒問題，但需要揭露的場合就要說明。</p></div>
+          <div class="panel warn"><span class="kicker">NG 6</span><h3>過度依賴，能力退化</h3><p>正確用法是「AI 先做，你來改」。專業判斷力才是你的本錢。</p></div>
+        </div>
+      </div>
+      <aside class="notes">六大 NG，第一條最嚴重：機敏資料。</aside>
+    </section>
+
+    <!-- ============ 10 四個底層邏輯 ============ -->
+    <section data-screen-label="10 一套心法 · 四個底層邏輯">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>10 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">一套心法</div>
+          <h1>應用 AI 的<span class="accent">四個底層邏輯</span></h1>
+          <p class="sub">一句話總結：把 AI 當成一個剛報到的工讀生來帶。</p>
+        </div>
+        <div class="cards-2" style="grid-template-rows:1fr 1fr;">
+          <div class="panel"><span class="kicker">①</span><h3>事事邀請它參與</h3><p>工讀生閒著也是閒著——想點子、看文件、檢查規劃都讓它出意見。它是「外部視角」，常常戳得到你的盲點。</p></div>
+          <div class="panel"><span class="kicker">②</span><h3>你是負責人</h3><p>它做的東西，你看過才能送出去。檢查事實、判斷方向、扛責任的，永遠是你。</p></div>
+          <div class="panel"><span class="kicker">③</span><h3>交代清楚它是誰、要做什麼</h3><p>只丟「幫我寫文案」只能拿到罐頭；角色、對象、背景、口吻講清楚，它才做得好。</p></div>
+          <div class="panel"><span class="kicker">④</span><h3>它每幾個月就升一級</h3><p>今天做不好的事，幾個月後可能就會了。不要因為一次爛經驗判它死刑，隨時回頭再試。</p></div>
+        </div>
+        <p style="margin-top:22px; font-size:18px; color:var(--ink-muted); font-family:var(--mono);">資料參考來源：《工作者的 AI 共智模式：讓 AI 成為第二專長，加速專業升級》</p>
+      </div>
+      <aside class="notes">把 AI 當剛報到的工讀生：多讓它參與、你負責、交代清楚、它會一直升級。</aside>
+    </section>
+
+    <!-- ============ 11 AI 常用語氣（一） ============ -->
+    <section data-screen-label="11 案例 · AI 常用語氣一">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>11 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">案例</div>
+          <h1>這些都是 AI 的常用語氣<span class="accent">（一）</span></h1>
+          <p class="sub">AI 寫的文字有一種味道。以後在稿子裡看到這些句型，就知道 AI 味出現了：</p>
+        </div>
+        <div class="num-list" style="justify-content:center; flex:1; gap:34px;">
+          <div class="item"><div class="no">01</div><div>
+            <h3>「表面／深層」</h3>
+            <p>「表面上這是效率問題，更深層地看，這其實是信任問題。」<br/><span class="warn-text">→ 聽起來很有洞察，常常只是同一件事換個層級再講一次。</span></p>
+          </div></div>
+          <div class="item"><div class="no">02</div><div>
+            <h3>「不是 A，而是 B」</h3>
+            <p>「寫作不是堆砌資訊，而是建立判斷。」<br/><span class="warn-text">→ 前面的「不是」常常是個沒人主張過的稻草人。</span></p>
+          </div></div>
+          <div class="item"><div class="no">03</div><div>
+            <h3>「真正的問題是⋯⋯」</h3>
+            <p>「真正的問題不是 AI 會不會取代人，而是使用 AI 的人有沒有品味。」<br/><span class="warn-text">→ 強行宣告前面都很淺，其實只是語氣升級。</span></p>
+          </div></div>
+        </div>
+      </div>
+      <aside class="notes">三種 AI 味句型：表面深層、不是A而是B、真正的問題是。</aside>
+    </section>
+
+    <!-- ============ 12 AI 常用語氣（二） ============ -->
+    <section data-screen-label="12 案例 · AI 常用語氣二">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>12 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">案例</div>
+          <h1>這些都是 AI 的常用語氣<span class="accent">（二）</span></h1>
+        </div>
+        <div class="num-list" style="justify-content:center; flex:1; gap:34px;">
+          <div class="item"><div class="no">04</div><div>
+            <h3>「關鍵不在於⋯而在於⋯」</h3>
+            <p>跟案例二是雙胞胎。<span class="warn-text">→ 用多了整篇都是「關鍵」，等於沒有關鍵。</span></p>
+          </div></div>
+          <div class="item"><div class="no">05</div><div>
+            <h3>「看似矛盾，其實合理」</h3>
+            <p>「AI 看似讓寫作變簡單，其實讓好的寫作變得更困難。」<br/><span class="warn-text">→ 把普通現象包裝成悖論，通篇都是就很疲勞。</span></p>
+          </div></div>
+          <div class="item"><div class="no">06</div><div>
+            <h3>格式癖好</h3>
+            <p>很愛破折號——像這樣——接句子；動不動條列、粗體；「值得注意的是」開頭、「總而言之」結尾。<br/><span class="warn-text">→ 還有：回答前先誇你一句「這是個很好的問題」。</span></p>
+          </div></div>
+        </div>
+      </div>
+      <aside class="notes">後三種：關鍵不在於、看似矛盾其實合理、格式癖好（破折號、條列、值得注意的是）。</aside>
+    </section>
+
+    <!-- ============ 13 四大 AI 近況 ============ -->
+    <section data-screen-label="13 近況 · 四大 AI">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>13 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">近況更新</div>
+          <h1>目前四大 AI 的<span class="accent">最新情況</span></h1>
+        </div>
+        <div class="cards-2" style="grid-template-rows:1fr 1fr;">
+          <div class="panel"><span class="kicker">ChatGPT — OpenAI</span><p>主力已更新到 <b>GPT-5.6</b>，資料分析和代碼執行的體驗提升不少。</p></div>
+          <div class="panel"><span class="kicker">Gemini — Google</span><p>推理模型 <b>3.1 Pro</b>（今天做會議紀錄用的那顆）；月底推 3.5 Pro。今天的課大部分繞著它。</p></div>
+          <div class="panel"><span class="kicker">Claude — Anthropic</span><p>出到 <b>Opus 4.8</b> 與更新的 <b>Fable 5</b>，寫程式跟長文件處理是強項。</p></div>
+          <div class="panel"><span class="kicker">Grok — xAI</span><p>更新到 <b>4.5</b>，特色是與 X（推特）的即時資訊整合。</p></div>
+        </div>
+        <div class="strip">
+          <span class="tag">不用背版本號</span>
+          <span class="txt">① 迭代非常快——學觀念、不要死背介面　② <em>用熟一套＋必要時交叉查證</em></span>
+        </div>
+      </div>
+      <aside class="notes">四大 AI 近況帶過即可，重點是不用背版本號。</aside>
+    </section>
+
+    <!-- ============ 14 Chapter 2 ============ -->
+    <section data-screen-label="14 Chapter · AI 快速搜尋">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>14 / 50</span>
+        </div>
+        <div class="chapter">
+          <div class="ch-no">SECTION 02</div>
+          <div class="ch-title">AI 快速搜尋</div>
+          <div class="ch-sub">Felo 與 Perplexity——「搜尋」這件事最有感的改變</div>
+        </div>
+        <div class="ch-idx">2</div>
+      </div>
+      <aside class="notes">第二段：AI 搜尋。</aside>
+    </section>
+
+    <!-- ============ 15 過去 vs 現在 ============ -->
+    <section data-screen-label="15 搜尋 · 過去 vs 現在">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>15 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">AI 快速搜尋 · 「零點擊世代」</div>
+          <h1>過去的搜尋 <span class="accent">vs.</span> 現在的搜尋</h1>
+        </div>
+        <div class="compare">
+          <div class="side panel">
+            <span class="kicker">過去 — Google 給你十條藍色連結</span>
+            <p>你自己當篩選器：開十個分頁、避開廣告和內容農場、比對舊資料、自己整理答案。</p>
+            <p style="margin-top:auto; color:var(--ink); font-weight:500;">找一個答案，半小時就過去了。</p>
+          </div>
+          <div class="vs">vs</div>
+          <div class="side panel deep">
+            <span class="kicker">現在 — 像問同事一樣問一句話</span>
+            <p>「台灣中小企業數位轉型有哪些政府補助方案？」它自動搜尋多個網站、讀完、整理成有條理的回答。</p>
+            <p style="margin-top:auto; color:#E8EFF6; font-weight:500;">每句話附來源編號，點下去就能查證。</p>
+          </div>
+        </div>
+        <div class="strip">
+          <span class="tag">比喻</span>
+          <span class="txt">以前是給你十本書叫你自己讀；現在是<em>有人幫你讀完、寫成摘要、附頁碼讓你查</em>。</span>
+        </div>
+        <p style="margin-top:18px; font-size:var(--fs-small); color:var(--ink-muted);">Google 搜尋最上面的「AI 摘要」就是這個趨勢，這就是搜尋的新常態。</p>
+      </div>
+      <aside class="notes">零點擊世代：從十條藍色連結到一段有來源的回答。</aside>
+    </section>
+
+    <!-- ============ 16 什麼時候用 ============ -->
+    <section data-screen-label="16 搜尋 · 什麼時候用">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>16 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">AI 快速搜尋</div>
+          <h1>什麼時候用？——<span class="accent">需要快速反應的時候</span></h1>
+        </div>
+        <div class="cards-3" style="flex:0 0 auto; min-height:290px;">
+          <div class="panel"><span class="kicker">場景 1 · 開會開到一半</span><h3>長官突然問：「其他縣市有沒有類似的做法？」</h3></div>
+          <div class="panel"><span class="kicker">場景 2 · 電話裡</span><h3>對方提到一個你沒聽過的名詞</h3></div>
+          <div class="panel"><span class="kicker">場景 3 · 臨時交辦</span><h3>下午前要對一個議題有基本掌握</h3></div>
+        </div>
+        <div class="strip">
+          <span class="tag">你需要的是</span>
+          <span class="txt">三分鐘內，對題目有一個「<em>有憑有據的輪廓</em>」——快速、有整理、有來源可追。</span>
+        </div>
+        <div class="note">
+          <b>注意：有來源，不代表來源是對的。</b>它引的可能是部落格、舊新聞。重要內容要點開看：是官方網站嗎？是最新資料嗎？來源的設計是方便你查證，不是幫你免除查證。
+        </div>
+      </div>
+      <aside class="notes">三個場景：會議中、電話中、臨時交辦。注意來源仍要查證。</aside>
+    </section>
+
+    <!-- ============ 17 Felo / Perplexity QR ============ -->
+    <section data-screen-label="17 工具 · Felo 與 Perplexity">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>17 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">工具在這裡</div>
+          <h1>Felo 與 Perplexity：<span class="accent">掃碼就能用</span></h1>
+        </div>
+        <div class="shot-row" style="gap:60px; padding:0 100px;">
+          <div class="shot-col" style="flex:0 0 auto;">
+            <figure style="flex:0 0 auto;"><img data-src="assets/shot-felo-appstore.jpg" alt="Felo App Store 頁面" style="max-height:520px;"/></figure>
+          </div>
+          <div class="qr-card" style="align-self:center;">
+            <img data-src="assets/qr-felo.png" alt="Felo QR code"/>
+            <div class="qr-name">Felo</div>
+            <div class="qr-url">felo.ai/search</div>
+            <div class="qr-sub">App Store 也搜尋得到「Felo」</div>
+          </div>
+          <div class="qr-card" style="align-self:center;">
+            <img data-src="assets/qr-perplexity.png" alt="Perplexity QR code"/>
+            <div class="qr-name">Perplexity</div>
+            <div class="qr-url">perplexity.ai</div>
+            <div class="qr-sub">App Store 也搜尋得到「Perplexity」</div>
+          </div>
+          <div class="shot-col" style="flex:0 0 auto;">
+            <figure style="flex:0 0 auto;"><img data-src="assets/shot-perplexity-appstore.jpg" alt="Perplexity App Store 頁面" style="max-height:520px;"/></figure>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">請大家當場掃碼下載，網頁版也可以直接用。</aside>
+    </section>
+
+    <!-- ============ 18 Felo 簡報功能 ============ -->
+    <section data-screen-label="18 進階 · Felo 簡報功能">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>18 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">進階補充</div>
+          <h1>Felo 的簡報功能：<span class="accent">搜尋結果直接變簡報</span></h1>
+        </div>
+        <div class="flow" style="flex:0 0 auto;">
+          <div class="step"><span class="kicker">STEP 1</span><h3>搜尋主題</h3><p>先完成一次 AI 搜尋</p></div>
+          <div class="arrow">›</div>
+          <div class="step"><span class="kicker">STEP 2</span><h3>請它產生簡報</h3><p>自動分頁、下標、排版</p></div>
+          <div class="arrow">›</div>
+          <div class="step"><span class="kicker">STEP 3</span><h3>可編輯的投影片初稿</h3><p>查資料到簡報骨架一條龍</p></div>
+        </div>
+        <div class="shot-full" style="margin-top:30px;">
+          <img data-src="assets/shot-felo-slides.png" alt="Felo 簡報功能畫面"/>
+        </div>
+        <div class="note" style="margin-top:24px;">
+          <b>但是：</b>要付費、字體太小、自己手工要調整很久——後面會有更適合的解法。
+        </div>
+      </div>
+      <aside class="notes">Felo 能直接把搜尋變簡報，但有付費與字級問題，NotebookLM 段落會給更好的解法。</aside>
+    </section>
+
+    <!-- ============ 19 Chapter 3 ============ -->
+    <section data-screen-label="19 Chapter · Typeless">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>19 / 50</span>
+        </div>
+        <div class="chapter">
+          <div class="ch-no">SECTION 03</div>
+          <div class="ch-title">語音輸入法<br/>Typeless</div>
+          <div class="ch-sub">手機版＋電腦版——用講的，比用打的快</div>
+        </div>
+        <div class="ch-idx">3</div>
+      </div>
+      <aside class="notes">第三段：Typeless。</aside>
+    </section>
+
+    <!-- ============ 20 那不就是語音輸入嗎 ============ -->
+    <section data-screen-label="20 Typeless · 不只是語音輸入">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>20 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">Typeless</div>
+          <h1>「那不就是<span class="accent">語音輸入</span>嗎？」</h1>
+        </div>
+        <div class="compare">
+          <div class="side panel">
+            <span class="kicker">過去的語音輸入 — 只做辨識</span>
+            <p style="font-family:var(--mono); font-size:26px; color:var(--ink);">「今天開會逗號，請大家準時參加句號」</p>
+            <p>像在唸電報。講錯、卡住、嗯嗯啊啊照單全收。</p>
+            <p style="margin-top:auto; color:var(--ink); font-weight:500;">打完還要花更多時間回頭改。</p>
+          </div>
+          <div class="vs">vs</div>
+          <div class="side panel deep">
+            <span class="kicker">Typeless — 辨識＋AI 整理</span>
+            <p>標點自動加、贅字口頭禪自動刪、講錯重講自動採用修正版、段落自動分好。</p>
+            <p style="margin-top:auto; color:#E8EFF6; font-weight:500;">你講的是草稿，它打出來的是潤稿。</p>
+          </div>
+        </div>
+        <div class="strip">
+          <span class="tag">最大重點</span>
+          <span class="txt">它是一個「<em>輸入法</em>」，不是獨立 App——LINE、郵件、公文系統，你在哪裡打字，它就在哪裡。</span>
+        </div>
+      </div>
+      <aside class="notes">Typeless 是輸入法不是 App：辨識加 AI 整理，講草稿、出潤稿。</aside>
+    </section>
+
+    <!-- ============ 21 手機版三步驟 ============ -->
+    <section data-screen-label="21 Typeless · 手機版安裝">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>21 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">Typeless · 手機版</div>
+          <h1>下載與設定<span class="accent">三步驟</span></h1>
+        </div>
+        <div class="cols">
+          <div class="col" style="flex:1.3; justify-content:center;">
+            <div class="num-list" style="gap:30px;">
+              <div class="item"><div class="no">1</div><div><h3>下載</h3><p>App Store 搜尋「Typeless」，或掃右邊 QR Code</p></div></div>
+              <div class="item"><div class="no">2</div><div><h3>初始設定</h3><p>跟著引導教學：把鍵盤加進系統、開啟權限</p></div></div>
+              <div class="item"><div class="no">3</div><div><h3>調成繁體中文<span class="warn-text">（重要）</span></h3><p>帳戶 → 設定 → 語言變體 → 繁體中文（下一頁跟著做）</p></div></div>
+            </div>
+            <div class="note">
+              <b>小缺點：</b>右滑切換切不回注音（是拼音）。但它是美國公司、沒有中資——輸入法看得到你打的每個字，「背後是誰」比好用更重要。
+            </div>
+          </div>
+          <div class="col" style="flex:0 0 auto; flex-direction:row; gap:40px; align-items:center;">
+            <figure style="margin:0;"><img data-src="assets/shot-typeless-appstore.jpg" alt="Typeless App Store" style="max-height:560px; border-radius:14px; border:1px solid var(--divider); box-shadow:0 20px 50px rgba(11,34,57,0.14);"/></figure>
+            <div class="qr-card">
+              <img data-src="assets/qr-typeless.png" alt="Typeless QR code"/>
+              <div class="qr-name">Typeless</div>
+              <div class="qr-url">typeless.com</div>
+              <div class="qr-sub">掃碼下載</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">三步驟：下載、初始設定、調繁體中文。提醒輸入法的資安：美國公司、無中資。</aside>
+    </section>
+
+    <!-- ============ 22 調繁中截圖 ============ -->
+    <section data-screen-label="22 Typeless · 調成繁體中文">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>22 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">Typeless · 手機版</div>
+          <h1>跟著畫面走：<span class="accent">把語言調成繁體中文</span></h1>
+        </div>
+        <div class="cols" style="align-items:stretch;">
+          <div class="shot-row" style="flex:2.6;">
+            <div class="shot-col">
+              <figure><img data-src="assets/shot-typeless-set1.jpg" alt="步驟一：帳戶到設定"/></figure>
+              <div class="shot-cap"><span class="step-no">1</span>帳戶 → 設定</div>
+            </div>
+            <div class="shot-col">
+              <figure><img data-src="assets/shot-typeless-set2.jpg" alt="步驟二：設定到語言變體"/></figure>
+              <div class="shot-cap"><span class="step-no">2</span>設定 → 語言變體</div>
+            </div>
+            <div class="shot-col">
+              <figure><img data-src="assets/shot-typeless-set3.jpg" alt="步驟三：選繁體中文台灣"/></figure>
+              <div class="shot-cap"><span class="step-no">3</span>選繁體中文（台灣）</div>
+            </div>
+          </div>
+          <div class="col" style="flex:1; justify-content:center;">
+            <div class="panel warn">
+              <span class="kicker">為什麼重要？</span>
+              <p>沒調的話，輸出可能是<b>簡體字</b>。</p>
+              <p>調成「繁體中文（台灣）」，確保輸出是繁體中文字。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">三張截圖帶大家實際操作一次。</aside>
+    </section>
+
+    <!-- ============ 23 電腦版 ============ -->
+    <section data-screen-label="23 Typeless · 電腦版">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>23 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">進階 · Typeless 電腦版</div>
+          <h1>公文、郵件在電腦上——<span class="accent">電腦版產值最大</span></h1>
+          <p class="sub">操作邏輯：游標在哪裡，就能在哪裡講話輸入。Word、郵件、瀏覽器都可以，打開輸入法就開始講。</p>
+        </div>
+        <div class="cols">
+          <div class="col" style="justify-content:center;">
+            <div class="panel">
+              <span class="kicker">重點一 · 開啟麥克風權限</span>
+              <p>安裝後系統跳出權限請求，一定要允許。當下按掉了 → 到系統設定把權限打開。</p>
+            </div>
+            <div class="panel">
+              <span class="kicker">重點二 · 免費版用兩個 email 註冊</span>
+              <p>免費額度每週 8,000 字、跟著帳號算。電腦、手機各用一個 email＝<b>兩份額度互不佔用</b>。</p>
+            </div>
+          </div>
+          <div class="col" style="flex:1.4;">
+            <div class="shot-full">
+              <img data-src="assets/shot-typeless-desktop.png" alt="Typeless 電腦版官網：說話，不要打字"/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">電腦版產值最大：麥克風權限、兩個 email 拿兩份免費額度。</aside>
+    </section>
+
+    <!-- ============ 24 Chapter 4 ============ -->
+    <section data-screen-label="24 Chapter · 會議紀錄全流程">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>24 / 50</span>
+        </div>
+        <div class="chapter">
+          <div class="ch-no">SECTION 04 — 今天的重頭戲</div>
+          <div class="ch-title">會議紀錄<br/>全流程</div>
+          <div class="ch-sub">從錄音、逐字稿、會議紀錄，到一份 Word 檔</div>
+        </div>
+        <div class="ch-idx">4</div>
+      </div>
+      <aside class="notes">第四段是今天的重頭戲。</aside>
+    </section>
+
+    <!-- ============ 25 為什麼不用 Typeless ============ -->
+    <section data-screen-label="25 會議紀錄 · 工具要分工">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>25 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">會議紀錄</div>
+          <h1>為什麼 Typeless <span class="accent">不能拿來做會議紀錄？</span></h1>
+        </div>
+        <div class="cols">
+          <div class="col">
+            <div class="panel" style="flex:1">
+              <span class="kicker">理由 ①</span>
+              <h3>不是設計來長時間錄音的</h3>
+              <p>就算硬用，也得一段一段按。</p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="panel warn" style="flex:1">
+              <span class="kicker">理由 ②</span>
+              <h3>它沒有逐字稿——它會「修飾」</h3>
+              <p>打字時是優點，做會議紀錄是缺點：會議紀錄要的是「誰講了什麼」的忠實記錄，<b>重要決議一個字都不能被 AI 自作主張改掉</b>。</p>
+            </div>
+          </div>
+        </div>
+        <div class="strip">
+          <span class="tag">所以，工具要分工</span>
+          <span class="txt">Typeless 只管「輸入法」；會議紀錄，交給<em>接下來的教學</em>。</span>
+        </div>
+      </div>
+      <aside class="notes">Typeless 會修飾文字，做會議紀錄反而是致命缺點。工具分工。</aside>
+    </section>
+
+    <!-- ============ 26 基本流程 ============ -->
+    <section data-screen-label="26 會議紀錄 · 基本流程">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>26 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">會議紀錄 · 基本流程</div>
+          <h1>內建錄音 ＋ <span class="accent">會議記錄機器人</span></h1>
+        </div>
+        <div class="cols">
+          <div class="col" style="flex:1.5; justify-content:center; gap:24px;">
+            <div class="flow">
+              <div class="step"><span class="kicker">STEP 1</span><h3>手機內建錄音 App 錄會議</h3><p>iPhone 用「語音備忘錄」即可</p></div>
+              <div class="arrow">›</div>
+              <div class="step"><span class="kicker">STEP 2</span><h3>錄音檔丟給 Gemini 的 Gem</h3><p>「會議記錄機器人」自動開工</p></div>
+            </div>
+            <div class="cols" style="flex:0 0 auto;">
+              <div class="col">
+                <div class="panel"><span class="kicker">為什麼用機器人？</span><p>指示已事先寫好存在裡面，<b>一個字都不用打</b>，照既定規格跑。</p></div>
+              </div>
+              <div class="col">
+                <div class="panel"><span class="kicker">比傳統工具強在哪？</span><p>會辨識上下文：討論補助方案時，模糊的詞是「核銷」不是「和尚」。</p></div>
+              </div>
+            </div>
+            <div class="note">
+              <b>錄音檔在哪裡？（上傳前要找得到）</b><br/>
+              iPhone：語音備忘錄 → 分享 → 儲存到檔案　｜　Android：錄音 App 直接分享，或檔案管理的 Recordings／Sounds
+            </div>
+          </div>
+          <div class="col" style="flex:0 0 auto; justify-content:center;">
+            <div class="qr-card">
+              <img data-src="assets/qr-meeting-bot.png" alt="會議記錄機器人 QR code"/>
+              <div class="qr-name">會議記錄機器人</div>
+              <div class="qr-sub">掃碼直達 Gem<br/>（需登入 Google）</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">流程兩步：錄音、丟給機器人。機器人是預存指令的 Gem，會辨識上下文。</aside>
+    </section>
+
+    <!-- ============ 27 操作截圖：找到 Gem ============ -->
+    <section data-screen-label="27 會議紀錄 · 找到機器人">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>27 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">會議紀錄 · 跟著操作</div>
+          <h1>在 Gemini 裡<span class="accent">找到機器人</span></h1>
+        </div>
+        <div class="shot-row">
+          <div class="shot-col">
+            <figure><img data-src="assets/shot-gem-app.jpg" alt="APP 裡的會議記錄機器人"/></figure>
+            <div class="shot-cap"><span class="step-no">1</span>登入 APP，網頁版先打聲招呼</div>
+          </div>
+          <div class="shot-col">
+            <figure><img data-src="assets/shot-gem-menu.jpg" alt="選單裡找到 Gem"/></figure>
+            <div class="shot-cap"><span class="step-no">2</span>側邊選單找到「Gem」</div>
+          </div>
+          <div class="shot-col">
+            <figure><img data-src="assets/shot-gem-tab.jpg" alt="所有 Gem 分頁"/></figure>
+            <div class="shot-cap"><span class="step-no">3</span>「所有 Gem」——機器人在這</div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">帶大家在 Gemini 介面裡找到 Gem。</aside>
+    </section>
+
+    <!-- ============ 28 三種產出 ============ -->
+    <section data-screen-label="28 會議紀錄 · 三種產出">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>28 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">會議紀錄</div>
+          <h1>一次錄音，<span class="accent">三種產出</span></h1>
+        </div>
+        <div class="cards-3">
+          <div class="panel">
+            <span class="kicker">產出 1 · 忠實記錄</span>
+            <h3>逐字稿</h3>
+            <p>誰講了什麼，一句一句完整保留。</p>
+            <p style="margin-top:auto; color:var(--accent); font-weight:500;">讓你可以判斷哪邊錯了</p>
+          </div>
+          <div class="panel">
+            <span class="kicker">產出 2 · 快速掌握</span>
+            <h3>摘要</h3>
+            <p>這場會議在講什麼，重點一目了然。</p>
+            <p style="margin-top:auto; color:var(--accent); font-weight:500;">可以會後快速回報長官</p>
+          </div>
+          <div class="panel">
+            <span class="kicker">產出 3 · 照格式整理</span>
+            <h3>會議紀錄</h3>
+            <p>可直接修改成正式紀錄。</p>
+            <p style="margin-top:auto; color:var(--accent); font-weight:500;">節省您打字的時間</p>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">一次錄音三種產出：逐字稿、摘要、會議紀錄。</aside>
+    </section>
+
+    <!-- ============ 29 操作截圖：上傳 ============ -->
+    <section data-screen-label="29 會議紀錄 · 上傳錄音檔">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>29 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">會議紀錄 · 跟著操作</div>
+          <h1>把錄音檔<span class="accent">交給機器人</span></h1>
+        </div>
+        <div class="shot-row">
+          <div class="shot-col">
+            <figure><img data-src="assets/shot-upload-1.jpg" alt="點選加號"/></figure>
+            <div class="shot-cap"><span class="step-no">1</span>點選「＋」</div>
+          </div>
+          <div class="shot-col">
+            <figure><img data-src="assets/shot-upload-3.jpg" alt="點選檔案送出"/></figure>
+            <div class="shot-cap"><span class="step-no">2</span>點選檔案、送出</div>
+          </div>
+          <div class="shot-col">
+            <figure><img data-src="assets/shot-upload-2.jpg" alt="第二批指令"/></figure>
+            <div class="shot-cap"><span class="step-no">3</span>跑完逐字稿後，可參考第二批指令</div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">上傳流程截圖。</aside>
+    </section>
+
+    <!-- ============ 30 額度與模型 ============ -->
+    <section data-screen-label="30 會議紀錄 · 額度與模型">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>30 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">會議紀錄</div>
+          <h1>額度與<span class="accent">模型選擇</span></h1>
+        </div>
+        <div class="cols">
+          <div class="col" style="justify-content:center;">
+            <div class="panel warn">
+              <span class="kicker">這個功能很燒額度（token）</span>
+              <p>一小時會議的資料量非常大，免費額度可能連一次都跑不完。<b>常態性需求要付費帳號才實用。</b></p>
+            </div>
+            <div class="panel">
+              <span class="kicker">付費同仁，模型怎麼選？</span>
+              <p>逐字稿要「完整」：實測 <b>3.1 Pro</b> 較完整，Flash 容易漏段落。<br/>3.5 Flash 雖聰明更快，建議在一般問答使用。</p>
+            </div>
+            <div class="strip" style="margin-top:0;">
+              <span class="tag">一句話</span>
+              <span class="txt">平常用 <em>Flash</em>，逐字稿用 <em>Pro</em>。</span>
+            </div>
+          </div>
+          <div class="col" style="flex:0 0 520px; justify-content:center; gap:24px;">
+            <figure style="margin:0;"><img data-src="assets/shot-gemini-bar.png" alt="問 Gemini 輸入列" style="border-radius:12px; border:1px solid var(--divider); box-shadow:0 14px 36px rgba(11,34,57,0.12);"/></figure>
+            <figure style="margin:0; text-align:center;"><img data-src="assets/shot-model-picker.png" alt="模型選擇選單" style="max-height:520px; border-radius:12px; border:1px solid var(--divider); box-shadow:0 14px 36px rgba(11,34,57,0.12);"/></figure>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">燒 token 的功能，常態要付費。平常 Flash、逐字稿 Pro。</aside>
+    </section>
+
+    <!-- ============ 31 字幕機器人 ============ -->
+    <section data-screen-label="31 進階備案 · 字幕機器人">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>31 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">進階備案</div>
+          <h1>「字幕機器人」——<span class="accent">會議超長的時候用</span></h1>
+          <p class="sub">會議記錄機器人的極限約一小時。字幕機器人更簡單：影片、YouTube 連結、聲音檔都收，只做逐字稿。</p>
+        </div>
+        <div class="cols">
+          <div class="col" style="flex:1.6; justify-content:center; gap:30px;">
+            <p style="font-family:var(--serif); font-size:var(--fs-h3); font-weight:600;">超長會議的處理流程</p>
+            <div class="flow">
+              <div class="step"><span class="kicker">①</span><h3>錄音檔分段</h3><p>兩小時切 2–3 段</p></div>
+              <div class="arrow">›</div>
+              <div class="step"><span class="kicker">②</span><h3>各開對話取逐字稿</h3><p>一段一個對話</p></div>
+              <div class="arrow">›</div>
+              <div class="step"><span class="kicker">③</span><h3>合併逐字稿</h3><p>交給會議記錄機器人</p></div>
+              <div class="arrow">›</div>
+              <div class="step"><span class="kicker">④</span><h3>產出摘要與紀錄</h3><p>不會一次吞太多</p></div>
+            </div>
+            <div class="note">
+              <b>進階觀念：對話乾淨很重要。</b>一個對話塞太多東西，AI 表現會下降、漏東漏西。一件事開一個新對話，是讓 AI 穩定發揮的基本功。
+            </div>
+          </div>
+          <div class="col" style="flex:0 0 auto; justify-content:center;">
+            <div class="qr-card">
+              <img data-src="assets/qr-subtitle-bot.png" alt="字幕機器人 QR code"/>
+              <div class="qr-name">字幕機器人</div>
+              <div class="qr-sub">掃碼直達 Gem</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">超長會議：切段、各開對話、合併、再產出。順帶講「一件事開一個新對話」的觀念。</aside>
+    </section>
+
+    <!-- ============ 32 Canvas 匯出 Word ============ -->
+    <section data-screen-label="32 最後一哩路 · Canvas 匯出 Word">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>32 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">最後一哩路</div>
+          <h1>Canvas <span class="accent">匯出成 Word 檔</span></h1>
+        </div>
+        <div class="flow" style="flex:0 0 auto;">
+          <div class="step"><span class="kicker">①</span><h3>錄音</h3><p>手機內建 App</p></div>
+          <div class="arrow">›</div>
+          <div class="step"><span class="kicker">②</span><h3>機器人</h3><p>逐字稿＋紀錄</p></div>
+          <div class="arrow">›</div>
+          <div class="step"><span class="kicker">③</span><h3>Canvas 修訂</h3><p>獨立編輯畫布</p></div>
+          <div class="arrow">›</div>
+          <div class="step"><span class="kicker">④</span><h3>分享 → Google 文件</h3><p>右上角「分享」</p></div>
+          <div class="arrow">›</div>
+          <div class="step"><span class="kicker">⑤</span><h3>下載 Word</h3><p>.docx 直接進公務流程</p></div>
+        </div>
+        <div class="cols" style="margin-top:34px;">
+          <div class="col">
+            <div class="panel" style="flex:1;">
+              <span class="kicker">Canvas（畫布）是什麼？</span>
+              <p>請 Gemini 產文件時用 Canvas 模式，內容放在<b>獨立畫布</b>、不混在對話串。可直接改、可下指令調。</p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="panel warn" style="flex:1;">
+              <span class="kicker">還是要注意</span>
+              <p>名詞、人物這些都要檢查。內容因為有摘要，錯了還可能救得回來；<b>但人名錯，就要抓去打屁股了</b>。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">五步生產線收尾到 Word。Canvas 是獨立畫布。人名一定要檢查。</aside>
+    </section>
+
+    <!-- ============ 33 截圖：Canvas 與匯出 ============ -->
+    <section data-screen-label="33 最後一哩路 · Canvas 操作">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>33 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">最後一哩路 · 跟著操作</div>
+          <h1>開 Canvas，<span class="accent">匯出到 Google 文件</span></h1>
+        </div>
+        <div class="shot-row">
+          <div class="shot-col" style="flex:0.8;">
+            <figure><img data-src="assets/shot-canvas-menu.png" alt="工具選單裡選 Canvas"/></figure>
+            <div class="shot-cap"><span class="step-no">1</span>工具選單開啟 Canvas</div>
+          </div>
+          <div class="shot-col" style="flex:1.6;">
+            <figure><img data-src="assets/shot-canvas-doc.png" alt="Canvas 畫布內容"/></figure>
+            <div class="shot-cap"><span class="step-no">2</span>內容在獨立畫布，可直接修改</div>
+          </div>
+          <div class="shot-col" style="flex:1;">
+            <figure><img data-src="assets/shot-export-menu.png" alt="匯出到 Google 文件"/></figure>
+            <div class="shot-cap"><span class="step-no">3</span>分享 → 匯出到 Google 文件</div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">Canvas 開啟與匯出的實際畫面。</aside>
+    </section>
+
+    <!-- ============ 34 截圖：Google 文件下載 Word ============ -->
+    <section data-screen-label="34 最後一哩路 · 下載 Word">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>34 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">最後一哩路 · 跟著操作</div>
+          <h1>從 Google 文件<span class="accent">下載 .docx</span></h1>
+        </div>
+        <div class="shot-full">
+          <img data-src="assets/shot-gdoc.png" alt="Google 文件裡的會議紀錄，可下載為 Word"/>
+        </div>
+        <div class="note" style="margin-top:24px;">
+          檔案 → 下載 → Microsoft Word（.docx），直接進公務流程。
+        </div>
+      </div>
+      <aside class="notes">最後從 Google 文件下載 Word。</aside>
+    </section>
+
+    <!-- ============ 35 七八成 ============ -->
+    <section data-screen-label="35 老規矩 · 最後兩成是你的">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>35 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">老規矩</div>
+          <h1>七、八成是 AI 的，<span class="accent">最後兩成是你的</span></h1>
+        </div>
+        <div class="cols">
+          <div class="col">
+            <div class="panel warn" style="flex:1;">
+              <span class="kicker">不是百分之百準確</span>
+              <p>人名、專有名詞、數字還是會轉錯，發言人也可能標錯。</p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="panel" style="flex:1;">
+              <span class="kicker">但七、八成已經非常好</span>
+              <p>把「從零開始打」變成「快速校對」，行政負擔直接少一大半。</p>
+            </div>
+          </div>
+        </div>
+        <div class="strip">
+          <span class="tag">最好的習慣</span>
+          <span class="txt">會議一結束，<em>趁記憶還熱馬上處理</em>——剛開完會哪句對哪句錯一眼看得出來；拖到三天後，校對成本就高了。</span>
+        </div>
+      </div>
+      <aside class="notes">期待管理：七八成正確已省一大半時間。會後馬上校對。</aside>
+    </section>
+
+    <!-- ============ 36 Chapter 5 ============ -->
+    <section data-screen-label="36 Chapter · NotebookLM">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>36 / 50</span>
+        </div>
+        <div class="chapter">
+          <div class="ch-no">SECTION 05</div>
+          <div class="ch-title">NotebookLM</div>
+          <div class="ch-sub">大型資料的最後一招＋簡報素材產生器</div>
+        </div>
+        <div class="ch-idx">5</div>
+      </div>
+      <aside class="notes">第五段：NotebookLM。</aside>
+    </section>
+
+    <!-- ============ 37 NotebookLM 定位 ============ -->
+    <section data-screen-label="37 NotebookLM · 定位">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>37 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">NotebookLM · 定位</div>
+          <h1>連字幕機器人都搞不定的，<span class="accent">交給它</span></h1>
+        </div>
+        <div class="cols">
+          <div class="col" style="flex:1.6; justify-content:center;">
+            <div class="panel">
+              <span class="kicker">什麼時候輪到 NotebookLM？</span>
+              <p>檔案太大、太長、Gemini 當機——在這邊上傳錄音檔，分析完說「請給我完整的逐字稿」。</p>
+              <p style="font-size:var(--fs-small); color:var(--ink-muted);">注意：它給原汁原味版本、不修錯字，要自己校，但可以丟回剛剛介紹的機器人處理。</p>
+            </div>
+            <div class="panel">
+              <span class="kicker">它是「筆記型」的 AI</span>
+              <p>一般 AI：你問它答，答案來自整個模型。<br/>NotebookLM：先丟資料（PDF、簡報、網頁、錄音、影片），<b>回答以你的資料為來源</b>——等於蓋一個小型資料庫，它是專屬幕僚。</p>
+            </div>
+            <div class="note">
+              旁邊還有「工作室（Studio）」：簡報、影片、圖表等各種產出功能。
+            </div>
+          </div>
+          <div class="col" style="flex:0 0 auto; justify-content:center; gap:28px; align-items:center;">
+            <figure style="margin:0;"><img data-src="assets/illus-notebooklm.jpg" alt="NotebookLM 示意插圖" style="max-width:460px; border-radius:14px;"/></figure>
+            <div class="qr-card" style="padding:26px;">
+              <img data-src="assets/qr-notebooklm.png" alt="NotebookLM QR code" style="width:200px; height:200px;"/>
+              <div class="qr-name">NotebookLM</div>
+              <div class="qr-url">notebooklm.google.com</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">NotebookLM 是筆記型 AI：以你丟的資料為來源回答，大檔案的最後一招。</aside>
+    </section>
+
+    <!-- ============ 38 NotebookLM UI ============ -->
+    <section data-screen-label="38 NotebookLM · 介面">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>38 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">NotebookLM · 跟著操作</div>
+          <h1>介面長這樣：<span class="accent">來源・對話・工作室</span></h1>
+        </div>
+        <div class="shot-full">
+          <img data-src="assets/shot-nblm-ui.png" alt="NotebookLM 介面：上傳來源"/>
+        </div>
+      </div>
+      <aside class="notes">介面三區：左邊來源、中間對話、右邊工作室。</aside>
+    </section>
+
+    <!-- ============ 39 NotebookLM 來源 ============ -->
+    <section data-screen-label="39 NotebookLM · 點選來源">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>39 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">NotebookLM · 跟著操作</div>
+          <h1>點選來源，<span class="accent">看最原始的辨識檔案</span></h1>
+        </div>
+        <div class="shot-row">
+          <div class="shot-col" style="flex:0.9;">
+            <figure><img data-src="assets/shot-nblm-source.png" alt="來源面板"/></figure>
+            <div class="shot-cap"><span class="step-no">1</span>左側「來源」點選檔案</div>
+          </div>
+          <div class="shot-col" style="flex:1.5;">
+            <figure><img data-src="assets/shot-nblm-source-raw.png" alt="最原始的辨識內容"/></figure>
+            <div class="shot-cap"><span class="step-no">2</span>就會出現最原始的辨識內容</div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">點來源可以直接看原始辨識檔。</aside>
+    </section>
+
+    <!-- ============ 40 NotebookLM 對話取逐字稿 ============ -->
+    <section data-screen-label="40 NotebookLM · 對話取逐字稿">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>40 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">NotebookLM · 跟著操作</div>
+          <h1>或從對話要：<span class="accent">「請給我完整的逐字稿」</span></h1>
+        </div>
+        <div class="shot-full">
+          <img data-src="assets/shot-nblm-chat.png" alt="在對話中請 NotebookLM 給完整逐字稿"/>
+        </div>
+        <div class="note" style="margin-top:24px;">
+          這樣它會稍微整理一下再給你。
+        </div>
+      </div>
+      <aside class="notes">從對話要逐字稿，它會稍微整理。</aside>
+    </section>
+
+    <!-- ============ 41 NotebookLM 簡報提示詞 ============ -->
+    <section data-screen-label="41 NotebookLM 簡報 · 自訂風格">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>41 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">NotebookLM 簡報</div>
+          <h1>自訂風格<span class="accent">提示詞</span></h1>
+        </div>
+        <div class="fill" style="justify-content:center; gap:36px;">
+          <div class="prompt-box">
+            <span class="cmt"># 在「自訂風格」輸入這一組：</span>
+            白底，專業商業，詳細解說，由淺入深，<br/>扁平化設計，字體稍大，適合老人家看
+          </div>
+          <div class="cols" style="flex:0 0 auto;">
+            <div class="col">
+              <div class="panel" style="flex:1;">
+                <span class="kicker">心態</span>
+                <p>公家機關的簡報不需要花俏——<b>視覺清楚、東西傳達到位</b>就好。</p>
+              </div>
+            </div>
+            <div class="col">
+              <div class="panel" style="flex:1;">
+                <span class="kicker">為什麼特別要「白底」？</span>
+                <p>產出簡報右下角自帶 NotebookLM 浮水印，<b>白底時浮水印最不顯眼</b>，後續最好處理。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">這組提示詞直接抄。白底是為了讓浮水印不顯眼。</aside>
+    </section>
+
+    <!-- ============ 42 NotebookLM 簡報限制 ============ -->
+    <section data-screen-label="42 NotebookLM 簡報 · 限制">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>42 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">NotebookLM 簡報</div>
+          <h1>先講清楚限制，<span class="accent">你才不會浪費時間</span></h1>
+        </div>
+        <div class="cols">
+          <div class="col" style="justify-content:center;">
+            <div class="panel warn">
+              <span class="kicker">最麻煩的一點：整頁都是「圖片」</span>
+              <p>基於 Nano Banana（奈米香蕉）圖像引擎生成，裡面的文字基本上<b>不能改</b>。</p>
+            </div>
+            <div class="panel warn">
+              <span class="kicker">務實的建議</span>
+              <p>不要浪費時間學移除浮水印、改圖裡的字——真的有夠痛苦，浪費時間。</p>
+            </div>
+            <div class="panel deep">
+              <span class="kicker">正確用法：反過來</span>
+              <p>請它生出大大的圖表、視覺化資料頁，當「<b>素材</b>」放進你自己的簡報。它負責視覺，架構你自己掌握。</p>
+            </div>
+          </div>
+          <div class="col" style="justify-content:center;">
+            <figure style="margin:0; text-align:center;"><img data-src="assets/illus-nblm-compare.jpg" alt="一般 AI 與 NotebookLM 的比較圖" style="border-radius:14px; border:1px solid var(--divider); box-shadow:0 20px 50px rgba(11,34,57,0.14);"/></figure>
+            <p style="text-align:center; font-size:22px; color:var(--ink-muted); margin-top:14px;">↑ 像這種比較圖，就是很好的「素材」用法</p>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">產出是整頁圖片、字不能改。正確用法：當素材，不當成品。</aside>
+    </section>
+
+    <!-- ============ 43 Chapter 6 ============ -->
+    <section data-screen-label="43 Chapter · 公文檢查機器人">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>43 / 50</span>
+        </div>
+        <div class="chapter">
+          <div class="ch-no">SECTION 06</div>
+          <div class="ch-title">公文檢查<br/>機器人</div>
+          <div class="ch-sub">送出去之前，多一雙眼睛幫你看過，永遠是值得的</div>
+        </div>
+        <div class="ch-idx">6</div>
+      </div>
+      <aside class="notes">第六段：公文檢查機器人。</aside>
+    </section>
+
+    <!-- ============ 44 公文檢查 ============ -->
+    <section data-screen-label="44 公文檢查 · 30 秒擋錯字">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>44 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">公文檢查機器人</div>
+          <h1>30 秒，<span class="accent">擋下送到長官面前的錯字</span></h1>
+          <p class="sub">為什麼自己看不出來？自己寫的東西自己最看不出錯，大腦會自動把它「讀對」。</p>
+        </div>
+        <div class="cols">
+          <div class="col" style="flex:1.6; justify-content:center; gap:26px;">
+            <div class="flow">
+              <div class="step"><span class="kicker">作法 · 零指令</span><h3>紙本拍照／文字貼上</h3><p>手機拍照或複製貼上</p></div>
+              <div class="arrow">›</div>
+              <div class="step"><span class="kicker">傳給機器人</span><h3>公文檢查機器人</h3><p>Gemini 的 Gem，零指令，傳給它就好</p></div>
+            </div>
+            <div class="cols" style="flex:0 0 auto;">
+              <div class="col">
+                <div class="panel"><span class="kicker">產出 ①　摘要</span><p>確認 AI 有看懂；摘出來的意思不對＝你的公文可能真的寫得不夠清楚。</p></div>
+              </div>
+              <div class="col">
+                <div class="panel"><span class="kicker">產出 ②　錯字提醒</span><p>錯字、要注意的地方，一條條列給你。</p></div>
+              </div>
+            </div>
+            <div class="note">
+              <b>老規矩：</b>專有名詞可能被誤判、也不保證抓到全部，需要自己判斷。
+            </div>
+          </div>
+          <div class="col" style="flex:0 0 auto; justify-content:center;">
+            <div class="qr-card">
+              <img data-src="assets/qr-doc-check.png" alt="公文檢查機器人 QR code"/>
+              <div class="qr-name">公文檢查機器人</div>
+              <div class="qr-sub">掃碼直達 Gem<br/>（需登入 Google）</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">零指令：拍照或貼文字傳給它，回摘要加錯字提醒。摘要不對代表公文寫不清楚。</aside>
+    </section>
+
+    <!-- ============ 45 Chapter 7 ============ -->
+    <section data-screen-label="45 Chapter · 對 AI 許願">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>45 / 50</span>
+        </div>
+        <div class="chapter">
+          <div class="ch-no">SECTION 07</div>
+          <div class="ch-title">對 AI 許願</div>
+          <div class="ch-sub">修鞋匠小精靈與國會 IVOD 下載器＋課程結尾</div>
+        </div>
+        <div class="ch-idx">7</div>
+      </div>
+      <aside class="notes">最後一段：對 AI 許願。</aside>
+    </section>
+
+    <!-- ============ 46 修鞋匠小精靈 ============ -->
+    <section data-screen-label="46 許願 · 修鞋匠與小精靈">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>46 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">對 AI 許願 · 格林童話</div>
+          <h1>修鞋匠與<span class="accent">小精靈</span></h1>
+        </div>
+        <div class="cols">
+          <div class="col" style="justify-content:center;">
+            <p style="font-size:var(--fs-body); color:var(--ink-soft); line-height:1.8;">窮困的鞋匠只剩最後一塊皮革。他把皮革裁好放在工作檯上，想說明天再做，就去睡了。</p>
+            <p style="font-size:var(--fs-body); color:var(--ink-soft); line-height:1.8;">隔天早上，鞋子已經做好了，比他自己做的還漂亮。是小精靈半夜來，把活兒全幹完了。</p>
+            <p class="statement" style="font-size:36px;">鞋匠只做了一件事：<span class="accent">把材料準備好。</span></p>
+          </div>
+          <div class="col" style="justify-content:center; gap:26px;">
+            <figure style="margin:0;"><img data-src="assets/illus-elves.jpg" alt="修鞋匠與小精靈插圖" style="border-radius:16px; box-shadow:0 24px 60px rgba(11,34,57,0.2);"/></figure>
+          </div>
+        </div>
+        <div class="strip">
+          <span class="tag">現在</span>
+          <span class="txt">AI 已經變成小精靈：你把問題講清楚「許願」，<em>它就自己把活兒幹完</em>。<br/><span style="font-size:24px; font-weight:400; color:#B9CCDC;">過去：AI 給程式碼，你自己貼、自己跑、報錯再問。現在：它自己寫、自己跑、自己修錯，成品端給你。</span></span>
+        </div>
+      </div>
+      <aside class="notes">小精靈的故事：把材料準備好、講清楚願望，AI 把活幹完。</aside>
+    </section>
+
+    <!-- ============ 47 IVOD 下載器 ============ -->
+    <section data-screen-label="47 實際案例 · IVOD 下載器">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>47 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">實際案例</div>
+          <h1>國會 IVOD 及<span class="accent">社群影片下載器</span></h1>
+        </div>
+        <div class="cols">
+          <div class="col" style="flex:1.5; justify-content:center; gap:24px;">
+            <div class="panel warn">
+              <span class="kicker">痛點</span>
+              <p>質詢、新聞影片要看完＋打成文字很花時間；下載網站被辦公室電腦擋、網址又常換、又有廣告。<b>光是「把影片拿到手」就是一場折磨。</b></p>
+            </div>
+            <p style="font-family:var(--serif); font-size:var(--fs-h3); font-weight:600;">所以我許了一個願：做一個下載器</p>
+            <div class="flow">
+              <div class="step"><span class="kicker">①</span><p>第一次執行自動裝好環境（等它跑完就好）</p></div>
+              <div class="arrow">›</div>
+              <div class="step"><span class="kicker">②</span><p>開網頁貼上網址</p></div>
+              <div class="arrow">›</div>
+              <div class="step"><span class="kicker">③</span><p>選 MP4（影片）或 MP3（聲音）</p></div>
+            </div>
+            <div class="note">
+              <b>資安提醒：</b>講師只在自己筆電用過、未在署內電腦執行過，公務電腦請依機關規定。
+            </div>
+          </div>
+          <div class="col" style="flex:1.1; justify-content:center; gap:22px; align-items:center;">
+            <figure style="margin:0;"><img data-src="assets/shot-downloader-web.jpg" alt="影音下載器網頁介面" style="max-height:430px; border-radius:14px; border:1px solid var(--divider); box-shadow:0 20px 50px rgba(11,34,57,0.14);"/></figure>
+            <div class="qr-card" style="padding:24px; flex-direction:row; gap:24px; text-align:left; align-items:center;">
+              <img data-src="assets/qr-downloader.png" alt="下載器 QR code" style="width:170px; height:170px;"/>
+              <div>
+                <div class="qr-name" style="font-size:27px;">下載器（雲端資料夾）</div>
+                <div class="qr-sub">掃碼取得程式（Google Drive）</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">許願案例：IVOD 下載器。三步用法。資安提醒要講。</aside>
+    </section>
+
+    <!-- ============ 48 串回生產線 ============ -->
+    <section data-screen-label="48 許願 · 串回生產線">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>48 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">串回今天的生產線</div>
+          <h1>工具不是孤立的，<span class="accent">是可以串起來的</span></h1>
+        </div>
+        <div class="flow" style="flex:0 0 auto;">
+          <div class="step"><span class="kicker">①</span><h3>許願做出的下載器</h3><p>拿到 MP3 聲音檔</p></div>
+          <div class="arrow">›</div>
+          <div class="step"><span class="kicker">②</span><h3>字幕機器人</h3><p>幾分鐘變文字</p></div>
+          <div class="arrow">›</div>
+          <div class="step"><span class="kicker">③</span><h3>另開新對話草擬回覆</h3><p>逐字稿＋初稿給 AI 修</p></div>
+          <div class="arrow">›</div>
+          <div class="step"><span class="kicker">④</span><h3>Canvas 匯出 Word</h3><p>可以往上陳的草稿</p></div>
+        </div>
+        <div class="fill" style="justify-content:center; gap:30px;">
+          <p class="statement">從「立委質詢的影片」到「可以往上陳的回應草稿」，<span class="accent">整條路都通了</span>。<br/>不用真的坐在那邊看完一小時的影片。</p>
+          <div class="strip" style="margin-top:0;">
+            <span class="tag">許願的意思</span>
+            <span class="txt"><em>痛點就是願望清單</em>。碰到「每次都要重複做、很煩、很花時間」的事，先不要認命，先許個願試試。</span>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">四步串聯：下載器、字幕機器人、新對話草擬、Canvas 出 Word。痛點就是願望清單。</aside>
+    </section>
+
+    <!-- ============ 49 課程總結 ============ -->
+    <section data-screen-label="49 結尾 · 一個觀念六套工具">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>49 / 50</span>
+        </div>
+        <div class="title-block">
+          <div class="deco">課程結尾</div>
+          <h1>今天走過：<span class="accent">一個觀念、六套工具</span></h1>
+        </div>
+        <div class="strip" style="margin:0 0 30px;">
+          <span class="tag">觀念不變</span>
+          <span class="txt">AI 是幕僚，不是長官。<br/><span style="font-size:22px; font-weight:400; color:#B9CCDC;">不能盡信要查證｜它會討好你，要它唱反調｜交辦不照抄｜機敏資料不上傳｜送出前修掉 AI 味｜責任永遠在人身上</span></span>
+        </div>
+        <div class="cards-3" style="grid-template-rows:1fr 1fr;">
+          <div class="panel"><span class="kicker">查資料</span><h3>AI 搜尋</h3><p>快速反應、有來源可追</p></div>
+          <div class="panel"><span class="kicker">打字</span><h3>Typeless</h3><p>手機＋電腦，用講的比打的快</p></div>
+          <div class="panel"><span class="kicker">開會</span><h3>會議紀錄生產線</h3><p>短會產紀錄；長會切段；Canvas 出 Word</p></div>
+          <div class="panel"><span class="kicker">大型資料</span><h3>NotebookLM</h3><p>最後一招逐字稿＋簡報素材</p></div>
+          <div class="panel"><span class="kicker">送公文前</span><h3>公文檢查機器人</h3><p>30 秒掃一遍，擋下錯字</p></div>
+          <div class="panel"><span class="kicker">碰到痛點</span><h3>對 AI 許願</h3><p>讓它自己作業，成品端給你</p></div>
+        </div>
+        <p style="margin-top:24px; font-size:var(--fs-small); color:var(--ink-soft);">共同點：替你省掉最花時間的粗工，省下的時間拿去做 AI 做不了的事——<b>判斷、溝通、決策</b>。</p>
+      </div>
+      <aside class="notes">總結：一個觀念、六套工具。省下的時間做判斷、溝通、決策。</aside>
+    </section>
+
+    <!-- ============ 50 Thanks ============ -->
+    <section data-screen-label="50 Thanks · Q&A">
+      <div class="frame">
+        <div class="meta-top">
+          <span class="brand"><span class="dot"></span>產業發展署 教育訓練 <span class="sep">/</span> AI 實務應用進階課程</span>
+          <span>50 / 50</span>
+        </div>
+        <div class="thanks">
+          <div class="deco">— THANK YOU —</div>
+          <div class="big">謝謝大家</div>
+          <p class="sub">開放 Q&amp;A：任何問題都歡迎，<br/>包括「我想許願，可行嗎？」</p>
+          <p class="cta">回去趕快練習，在這禮拜的工作裡實際用一次。</p>
+        </div>
+      </div>
+      <aside class="notes">收尾，開放 QA，鼓勵大家這禮拜實際用一次。</aside>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/notes/notes.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1920,
+    height: 1080,
+    margin: 0,
+    minScale: 0.1,
+    maxScale: 2.0,
+    hash: true,
+    controls: true,
+    progress: true,
+    viewDistance: 2,
+    mobileViewDistance: 1,
+    center: false,
+    transition: 'fade',
+    transitionSpeed: 'default',
+    backgroundTransition: 'none',
+    plugins: [ RevealNotes ]
+  });
+  Reveal.on('slidechanged', e => handleCoverTyping(e.indexh));
+  Reveal.on('ready', e => handleCoverTyping(e.indexh));
+
+  // ==== Cover terminal typewriter ====
+  let coverTimers = [];
+  function clearCoverTimers(){
+    coverTimers.forEach(t => clearTimeout(t));
+    coverTimers = [];
+  }
+  function resetCoverTyping(){
+    clearCoverTimers();
+    document.querySelectorAll('#cover-term .typed').forEach(el => { el.textContent = ''; });
+  }
+  function runCoverTyping(){
+    resetCoverTyping();
+    document.querySelectorAll('#cover-term .typed').forEach(el => {
+      const text = el.dataset.typed || '';
+      const delay = parseInt(el.dataset.delay || '0', 10);
+      const speed = parseInt(el.dataset.speed || '50', 10);
+      for (let i = 0; i <= text.length; i++) {
+        coverTimers.push(setTimeout(() => { el.textContent = text.slice(0, i); }, delay + i * speed));
+      }
+    });
+  }
+  function handleCoverTyping(idx){
+    if (idx === 0) {
+      coverTimers.push(setTimeout(runCoverTyping, 200));
+    } else {
+      resetCoverTyping();
+    }
+  }
+</script>
+</body>
+</html>
