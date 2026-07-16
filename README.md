@@ -2,6 +2,7 @@
 
 一個觀念 × 六套工具——從搜尋、輸入、會議紀錄到對 AI 許願。
 
+- 線上簡報：https://pokemonida99.github.io/ai-course-0717/
 - 技術：單一 HTML + [reveal.js](https://revealjs.com/) 4.6.1（CDN），無建置工具
 - 畫布 1920×1080，自動縮放；`←` `→` 翻頁、`S` 開講者備稿、`ESC` 總覽
 - 日期：115.07.17
